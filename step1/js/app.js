@@ -2,7 +2,7 @@
 
 var BookModel = Backbone.Model.extend({
         defaults:{
-            coverImage:"../img/placeholder.png",
+            coverImage:"../img/thumb.png",
             title:"Some title",
             author:"John Doe",
             releaseDate:"2012",
@@ -11,11 +11,11 @@ var BookModel = Backbone.Model.extend({
     });
 
 
-var books = [{title:"JS the good parts", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"},
-        {title:"CS the better parts", author:"John Doe", releaseDate:"2012", keywords:"CoffeeScript Programming"},
-        {title:"Scala for the impatient", author:"John Doe", releaseDate:"2012", keywords:"Scala Programming"},
+var books = [{coverImage:"../img/jsgp.jpg",title:"JS the good parts", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"},
+        {coverImage:"../img/coffee.png",title:"CS the better parts", author:"John Doe", releaseDate:"2012", keywords:"CoffeeScript Programming"},
+        {coverImage:"../img/scala.jpg",title:"Scala for the impatient", author:"John Doe", releaseDate:"2012", keywords:"Scala Programming"},
         {title:"American Psyco", author:"Bret Easton Ellis", releaseDate:"2012", keywords:"Novel Splatter"},
-        {title:"Eloquent JavaScript", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"}];
+        {coverImage:"../img/placeholder.png",title:"Eloquent JavaScript", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"}];
 
 var BookView = Backbone.View.extend({
         tagName:"div",
@@ -71,14 +71,8 @@ var libraryView = Backbone.View.extend({
    
 var libView = new libraryView();
  
- console.log($('#addlink'))	 
-   
- $('#addlink').click(function (event) {
- 	 console.log(event)
- 	 event.preventDefault();
- 	// $(this).unbind('click');
- 	 $('#addFormContainer').fadeIn();
- });
+ $('#addlink').click(function (event) {$('#addFormContainer').fadeIn();});
+ $('#cancel').click(function (event) {$('#addFormContainer').fadeOut(1000);});
 
 
 })(jQuery);
