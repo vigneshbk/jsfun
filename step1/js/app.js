@@ -40,6 +40,7 @@ var libraryView = Backbone.View.extend({
     	console.log('init');
      	this.collection = new BookCollection(books);
      	this.render();
+        this.collection.on("add", this.renderBook, this);
     },
   	events:{
     "click #add":"addBook"
@@ -54,19 +55,27 @@ var libraryView = Backbone.View.extend({
 
      addBook:function () {
           console.log('addd book called');
-    }
+          var book = new BookModel({
+        title:"JavaScript Good Parts",
+        coverImage:"../img/jsgp.jpg",
+        author:"Douglas Crokford",
+        releaseDate:"2012",
+        keywords:"JavaScript Programming" });
+
+          this.collection.add(book); 
+    },
+     renderBook:function(item){
+            var bookView = new BookView({
+                model: item
+            });
+            this.$el.append(bookView.render().el);
+        }
 
 
 });
 
 
-    var book = new BookModel({
-        title:"JavaScript Good Parts",
-        coverImage:"../img/jsgp.jpg",
-        author:"Douglas Crokford",
-        releaseDate:"2012",
-        keywords:"JavaScript Programming"
-    });
+    
 
    
 var libView = new libraryView();
