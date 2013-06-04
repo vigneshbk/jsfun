@@ -41,16 +41,21 @@ var libraryView = Backbone.View.extend({
      	this.collection = new BookCollection(books);
      	this.render();
     },
-  
+  	events:{
+    "click #add":"addBook"
+	},
     render:function () {
-    	 
-           var that = this;
-           _.each(this.collection.models, function(item){		 
-			 var  bookView = new BookView({model:item});
-			  that.$el.append(bookView.render().el);
+        var that = this;
+        _.each(this.collection.models, function(item){		 
+			var  bookView = new BookView({model:item});
+		    that.$el.append(bookView.render().el);
+        });    
+    },
 
-           });
-     }
+     addBook:function () {
+          console.log('addd book called');
+    }
+
 
 });
 
@@ -65,9 +70,15 @@ var libraryView = Backbone.View.extend({
 
    
 var libView = new libraryView();
- 	 
-   
  
+ console.log($('#addlink'))	 
+   
+ $('#addlink').click(function (event) {
+ 	 console.log(event)
+ 	 event.preventDefault();
+ 	// $(this).unbind('click');
+ 	 $('#addFormContainer').fadeIn();
+ });
 
 
 })(jQuery);
