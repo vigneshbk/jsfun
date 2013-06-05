@@ -7,6 +7,13 @@ var BookModel = Backbone.Model.extend({
             author:"John Doe",
             releaseDate:"2012",
             keywords:"JavaScript Programming"
+        },
+
+        validate: function(attributes) {
+            if(attributes.title == null || attributes.title === '') {
+              return 'Title in required';
+            }
+            return '';
         }
     });
 
@@ -53,18 +60,20 @@ var libraryView = Backbone.View.extend({
         });    
     },
 
-     addBook:function () {
-          console.log('addd book called');
-          var book = new BookModel({
-        title:"JavaScript Good Parts",
-        coverImage:"../img/jsgp.jpg",
-        author:"Douglas Crokford",
-        releaseDate:"2012",
-        keywords:"JavaScript Programming" });
-
-          this.collection.add(book); 
+     addBook:function (e) {
+          e.preventDefault();
+        var formData = {};
+        $("#addBook").find("input").each(function(i, el){ 
+                if($(el).val() !== '')
+                    formData[el.id] = $(el).val();
+        });
+ 
+        books.push(formData);
+        
+        this.collection.add(new BookModel(formData),{ error: function(){console.log('error in adding model to collection');} });        
     },
      renderBook:function(item){
+ 
             var bookView = new BookView({
                 model: item
             });
@@ -80,7 +89,7 @@ var libraryView = Backbone.View.extend({
    
 var libView = new libraryView();
  
- $('#addlink').click(function (event) {$('#addFormContainer').fadeIn();});
+ $('#addlink').click(function (event) { event.preventDefault();$('#addFormContainer').fadeIn();});
  $('#cancel').click(function (event) {$('#addFormContainer').fadeOut(1000);});
 
 
